@@ -7,29 +7,29 @@ __Azure Sql Server:-__
 	privatelink.database.windows.net
 
 __Azure Synapse:-__
-	privatelink.sql.azuresynapse.net
-	privatelink.dev.azuresynapse.net
+	privatelink.sql.azuresynapse.net,
+	privatelink.dev.azuresynapse.net,
 	privatelink.azuresynapse.net
 
 __Azure Storage Account:-__
-	privatelink.blob.core.windows.net
-	privatelink.table.core.windows.net
-	privatelink.queue.core.windows.net
-	privatelink.file.core.windows.net
+	privatelink.blob.core.windows.net,
+	privatelink.table.core.windows.net,
+	privatelink.queue.core.windows.net,
+	privatelink.file.core.windows.net,
 	privatelink.web.core.windows.net
 
 __Azure Data lake Store Gen2:-__
 	privatelink.dfs.core.windows.net
 
 __Azure Cosmos DB:-__
-	privatelink.mongo.cosmos.azure.com
-	privatelink.cassandra.cosmos.azure.com
+	privatelink.mongo.cosmos.azure.com,
+	privatelink.cassandra.cosmos.azure.com,
 	privatelink.postgres.cosmos.azure.com
 
 __Azure Batch:-__ 
-	{regionName}.privatelink.batch.azure.com
-	WestEurope.privatelink.batch.azure.com
-	{regionName}.service.privatelink.batch.azure.com
+	{regionName}.privatelink.batch.azure.com,
+	WestEurope.privatelink.batch.azure.com,
+	{regionName}.service.privatelink.batch.azure.com,
 	WestEurope.service.privatelink.batch.azure.com
 
 __Azure Database for PostgreSQL:-__
@@ -61,18 +61,18 @@ __Azure Signal R:-__
 	privatelink.service.signalr.net
 
 __Azure Data Factory:-__
-	privatelink.datafactory.azure.net
+	privatelink.datafactory.azure.net,
 	privatelink.adf.azure.com
 
 __Microsoft Purview:-__
-	privatelink.purview.azure.com
+	privatelink.purview.azure.com,
 	privatelink.purviewstudio.azure.com
 
 __Azure HD Insights:-__
-	privatelink.azurehdinsight.net
+	privatelink.azurehdinsight.net,
 
 __Azure Static Websites:-__
-	privatelink.azurestaticapps.net
+	privatelink.azurestaticapps.net,
 	privatelink.{partitionId}.azurestaticapps.net
 
 __Azure API Management:-__
