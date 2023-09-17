@@ -1,0 +1,791 @@
+trigger:
+  none
+
+######################
+#DECLARE PARAMETERS:-
+######################
+parameters:
+- name: SubscriptionID
+  displayName: Subscription ID Details Follow Below:-
+  default: 210e66cb-55cf-424e-8daa-6cad804ab604
+  values:
+  -  210e66cb-55cf-424e-8daa-6cad804ab604
+
+- name: ServiceConnection
+  displayName: Service Connection Name Follows Below:-
+  default: amcloud-cicd-service-connection
+  values:
+  -  amcloud-cicd-service-connection
+
+- name: Private_DNS_Zone__Azure_Sql_Server
+  type: boolean
+  default: false
+
+- name: Private_DNS_Zone__Azure_Synapse
+  type: boolean
+  default: false
+
+- name: Private_DNS_Zone__Azure_Storage_Account
+  type: boolean
+  default: false
+
+- name: Private_DNS_Zone__Azure_Data_Lake_Store_Gen2
+  type: boolean
+  default: false
+
+- name: Private_DNS_Zone__Azure_Cosmos
+  type: boolean
+  default: false
+
+- name: Private_DNS_Zone__Azure_Batch
+  type: boolean
+  default: false
+
+- name: Private_DNS_Zone__Azure_PostGreSQL
+  type: boolean
+  default: false
+
+- name: Private_DNS_Zone__Azure_MySQL
+  type: boolean
+  default: false
+
+- name: Private_DNS_Zone__Azure_MariaDB
+  type: boolean
+  default: false
+
+- name: Private_DNS_Zone__Azure_KeyVault
+  type: boolean
+  default: false
+
+- name: Private_DNS_Zone__Azure_Container_Registry
+  type: boolean
+  default: false
+
+######################
+#DECLARE VARIABLES:-
+######################
+variables:
+
+##############
+# Az-SQL:-
+##############
+  TfVars_az_sql: "az-private-dns-zones-az-sql.tfvars"
+  TfstateFile_az_sql: "PDZ/private-dnszones-spoke-deploy-az-sql.tfstate"
+  WorkingDir_az_sql: "$(System.DefaultWorkingDirectory)/Private-DNS-Zones/02-Usecase-Spoke-Deployment/pdz-az-sql"
+
+##############
+# Az-Syanpse:-
+##############
+  TfVars_az_synapse: "az-private-dns-zones-az-synapse.tfvars"
+  TfstateFile_az_synapse: "PDZ/private-dnszones-spoke-deploy-az-synapse.tfstate"
+  WorkingDir_az_synapse: "$(System.DefaultWorkingDirectory)/Private-DNS-Zones/02-Usecase-Spoke-Deployment/pdz-az-synapse"
+
+########################
+# Az-Storage Account:-
+########################
+  TfVars_az_sa: "az-private-dns-zones-az-sa.tfvars"
+  TfstateFile_az_sa: "PDZ/private-dnszones-spoke-deploy-az-sa.tfstate"
+  WorkingDir_az_sa: "$(System.DefaultWorkingDirectory)/Private-DNS-Zones/02-Usecase-Spoke-Deployment/pdz-az-sa"
+
+############################
+# Az-Data-Lake-Store-Gen2:-
+############################
+  TfVars_az_dlsGen2: "az-private-dns-zones-az-dlsGen2.tfvars"
+  TfstateFile_az_dlsGen2: "PDZ/private-dnszones-spoke-deploy-az-dlsGen2.tfstate"
+  WorkingDir_az_dlsGen2: "$(System.DefaultWorkingDirectory)/Private-DNS-Zones/02-Usecase-Spoke-Deployment/pdz-az-dlsGen2"
+
+###############
+# Az-Cosmos:-
+###############
+  TfVars_az_cosmos: "az-private-dns-zones-az-cosmos.tfvars"
+  TfstateFile_az_cosmos: "PDZ/private-dnszones-spoke-deploy-az-cosmos.tfstate"
+  WorkingDir_az_cosmos: "$(System.DefaultWorkingDirectory)/Private-DNS-Zones/02-Usecase-Spoke-Deployment/pdz-az-cosmos"
+
+###########################
+# Az-Batch:-
+###########################
+  TfVars_az_batch: "az-private-dns-zones-az-batch.tfvars"
+  TfstateFile_az_batch: "PDZ/private-dnszones-spoke-deploy-az-batch.tfstate"
+  WorkingDir_az_batch: "$(System.DefaultWorkingDirectory)/Private-DNS-Zones/02-Usecase-Spoke-Deployment/pdz-az-batch"
+
+###########################
+# Az-PostgreSQL:-
+###########################
+  TfVars_az_psql: "az-private-dns-zones-az-psql.tfvars"
+  TfstateFile_az_psql: "PDZ/private-dnszones-spoke-deploy-az-psql.tfstate"
+  WorkingDir_az_psql: "$(System.DefaultWorkingDirectory)/Private-DNS-Zones/02-Usecase-Spoke-Deployment/pdz-az-psql"
+
+###########################
+# Az-MYSQL:-
+###########################
+  TfVars_az_mysql: "az-private-dns-zones-az-mysql.tfvars"
+  TfstateFile_az_mysql: "PDZ/private-dnszones-spoke-deploy-az-mysql.tfstate"
+  WorkingDir_az_mysql: "$(System.DefaultWorkingDirectory)/Private-DNS-Zones/02-Usecase-Spoke-Deployment/pdz-az-mysql"
+
+###########################
+# Az-MariaDB:-
+###########################
+  TfVars_az_mariadb: "az-private-dns-zones-az-mariadb.tfvars"
+  TfstateFile_az_mariadb: "PDZ/private-dnszones-spoke-deploy-az-mariadb.tfstate"
+  WorkingDir_az_mariadb: "$(System.DefaultWorkingDirectory)/Private-DNS-Zones/02-Usecase-Spoke-Deployment/pdz-az-mariadb"
+
+###########################
+# Az-Keyvault:-
+###########################
+  TfVars_az_kv: "az-private-dns-zones-az-kv.tfvars"
+  TfstateFile_az_kv: "PDZ/private-dnszones-spoke-deploy-az-kv.tfstate"
+  WorkingDir_az_kv: "$(System.DefaultWorkingDirectory)/Private-DNS-Zones/02-Usecase-Spoke-Deployment/pdz-az-kv"
+
+###########################
+# Az-Container-Registry:-
+###########################
+  TfVars_az_acr: "az-private-dns-zones-az-acr.tfvars"
+  TfstateFile_az_acr: "PDZ/private-dnszones-spoke-deploy-az-acr.tfstate"
+  WorkingDir_az_acr: "$(System.DefaultWorkingDirectory)/Private-DNS-Zones/02-Usecase-Spoke-Deployment/pdz-az-acr"
+
+##################
+# Common to all:-
+##################
+  ResourceGroup: "tfpipeline-rg"
+  StorageAccount: "tfpipelinesa"
+  Container: "terraform"
+  BuildAgent: "windows-latest"
+  Environment: "NonProd"
+
+#########################
+# Declare Build Agents:-
+#########################
+pool:
+  vmImage: $(BuildAgent)
+
+###################
+# Declare Stages:-
+###################
+stages:
+
+########################################################
+# Stage to Deploy Private Endpoint DNS for Azure SQL:-
+########################################################
+
+- stage: DEPLOY_PDZ_AZ_SQL
+  condition: |
+     and(eq(variables['build.sourceBranch'], 'refs/heads/main'),
+       eq('${{ parameters.Private_DNS_Zone__Azure_Sql_Server }}', true)
+     )
+  jobs:
+  - job: DEPLOY_PDZ_AZ_SQL
+    displayName: DEPLOY PRIVATE DNS ZONE AZ SQL
+    steps:
+# Install Terraform Installer in the Build Agent:-
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+      displayName: INSTALL TERRAFORM VERSION - LATEST
+      inputs:
+        terraformVersion: 'latest'
+# Terraform Init:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM INIT
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(workingDir_az_sql)' # Az DevOps can find the required Terraform code
+        backendServiceArm: '${{ parameters.ServiceConnection }}' 
+        backendAzureRmResourceGroupName: '$(ResourceGroup)' 
+        backendAzureRmStorageAccountName: '$(StorageAccount)'
+        backendAzureRmContainerName: '$(Container)'
+        backendAzureRmKey: '$(TfstateFile_az_sql)'
+# Terraform Validate:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM VALIDATE
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+        workingDirectory: '$(workingDir_az_sql)'
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Plan:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM PLAN
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        workingDirectory: '$(workingDir_az_sql)'
+        commandOptions: "--var-file=$(TfVars_az_sql)"
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Apply:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM APPLY # The terraform Plan stored earlier is used here to apply only the changes.
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(workingDir_az_sql)'
+        commandOptions: "--var-file=$(TfVars_az_sql)" 
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+
+###########################################################
+# Stage to Deploy Private Endpoint DNS for Azure Synapse:-
+###########################################################
+
+- stage: DEPLOY_PDZ_AZ_SYNAPSE
+  condition: |
+     and(eq(variables['build.sourceBranch'], 'refs/heads/main'),
+       eq('${{ parameters.Private_DNS_Zone__Azure_Synapse }}', true)
+     )
+  jobs:
+  - job: DEPLOY_PDZ_AZ_SYNAPSE
+    displayName: DEPLOY PRIVATE DNS ZONE AZ SYNAPSE
+    steps:
+# Install Terraform Installer in the Build Agent:-
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+      displayName: INSTALL TERRAFORM VERSION - LATEST
+      inputs:
+        terraformVersion: 'latest'
+# Terraform Init:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM INIT
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(workingDir_az_synapse)' # Az DevOps can find the required Terraform code
+        backendServiceArm: '${{ parameters.ServiceConnection }}' 
+        backendAzureRmResourceGroupName: '$(ResourceGroup)' 
+        backendAzureRmStorageAccountName: '$(StorageAccount)'
+        backendAzureRmContainerName: '$(Container)'
+        backendAzureRmKey: '$(TfstateFile_az_synapse)'
+# Terraform Validate:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM VALIDATE
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+        workingDirectory: '$(workingDir_az_synapse)'
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Plan:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM PLAN
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        workingDirectory: '$(workingDir_az_synapse)'
+        commandOptions: "--var-file=$(TfVars_az_synapse)"
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Apply:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM APPLY # The terraform Plan stored earlier is used here to apply only the changes.
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(workingDir_az_synapse)'
+        commandOptions: "--var-file=$(TfVars_az_synapse)" 
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+
+#####################################################################
+# Stage to Deploy Private Endpoint DNS for Azure Storage Account:-
+#####################################################################
+
+- stage: DEPLOY_PDZ_AZ_STORAGE_ACCOUNT
+  condition: |
+     and(eq(variables['build.sourceBranch'], 'refs/heads/main'),
+       eq('${{ parameters.Private_DNS_Zone__Azure_Storage_Account }}', true)
+     )
+  jobs:
+  - job: DEPLOY_PDZ_AZ_STORAGE_ACCOUNT
+    displayName: DEPLOY PRIVATE DNS ZONE AZ STORAGE ACCOUNT
+    steps:
+# Install Terraform Installer in the Build Agent:-
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+      displayName: INSTALL TERRAFORM VERSION - LATEST
+      inputs:
+        terraformVersion: 'latest'
+# Terraform Init:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM INIT
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(workingDir_az_sa)' # Az DevOps can find the required Terraform code
+        backendServiceArm: '${{ parameters.ServiceConnection }}' 
+        backendAzureRmResourceGroupName: '$(ResourceGroup)' 
+        backendAzureRmStorageAccountName: '$(StorageAccount)'
+        backendAzureRmContainerName: '$(Container)'
+        backendAzureRmKey: '$(TfstateFile_az_sa)'
+# Terraform Validate:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM VALIDATE
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+        workingDirectory: '$(workingDir_az_sa)'
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Plan:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM PLAN
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        workingDirectory: '$(workingDir_az_sa)'
+        commandOptions: "--var-file=$(TfVars_az_sa)"
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Apply:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM APPLY # The terraform Plan stored earlier is used here to apply only the changes.
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(workingDir_az_sa)'
+        commandOptions: "--var-file=$(TfVars_az_sa)" 
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+
+#########################################################################
+# Stage to Deploy Private Endpoint DNS for Azure Data Lake Store Gen2:-
+#########################################################################
+
+- stage: DEPLOY_PDZ_AZ_DATA_LAKE_STORE_GEN2
+  condition: |
+     and(eq(variables['build.sourceBranch'], 'refs/heads/main'),
+       eq('${{ parameters.Private_DNS_Zone__Azure_Data_Lake_Store_Gen2 }}', true)
+     )
+  jobs:
+  - job: DEPLOY_PDZ_AZ_DATA_LAKE_STORE_GEN2
+    displayName: DEPLOY PRIVATE DNS ZONE AZ DATA LAKE STORE GEN2
+    steps:
+# Install Terraform Installer in the Build Agent:-
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+      displayName: INSTALL TERRAFORM VERSION - LATEST
+      inputs:
+        terraformVersion: 'latest'
+# Terraform Init:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM INIT
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(workingDir_az_dlsGen2)' # Az DevOps can find the required Terraform code
+        backendServiceArm: '${{ parameters.ServiceConnection }}' 
+        backendAzureRmResourceGroupName: '$(ResourceGroup)' 
+        backendAzureRmStorageAccountName: '$(StorageAccount)'
+        backendAzureRmContainerName: '$(Container)'
+        backendAzureRmKey: '$(TfstateFile_az_dlsGen2)'
+# Terraform Validate:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM VALIDATE
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+        workingDirectory: '$(workingDir_az_dlsGen2)'
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Plan:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM PLAN
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        workingDirectory: '$(workingDir_az_dlsGen2)'
+        commandOptions: "--var-file=$(TfVars_az_dlsGen2)"
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Apply:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM APPLY # The terraform Plan stored earlier is used here to apply only the changes.
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(workingDir_az_dlsGen2)'
+        commandOptions: "--var-file=$(TfVars_az_dlsGen2)" 
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+
+###########################################################
+# Stage to Deploy Private Endpoint DNS for Azure Cosmos:-
+###########################################################
+
+- stage: DEPLOY_PDZ_AZ_COSMOS
+  condition: |
+     and(eq(variables['build.sourceBranch'], 'refs/heads/main'),
+       eq('${{ parameters.Private_DNS_Zone__Azure_Cosmos }}', true)
+     )
+  jobs:
+  - job: DEPLOY_PDZ_AZ_COSMOS
+    displayName: DEPLOY PRIVATE DNS ZONE AZ COSMOS
+    steps:
+# Install Terraform Installer in the Build Agent:-
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+      displayName: INSTALL TERRAFORM VERSION - LATEST
+      inputs:
+        terraformVersion: 'latest'
+# Terraform Init:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM INIT
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(workingDir_az_cosmos)' # Az DevOps can find the required Terraform code
+        backendServiceArm: '${{ parameters.ServiceConnection }}' 
+        backendAzureRmResourceGroupName: '$(ResourceGroup)' 
+        backendAzureRmStorageAccountName: '$(StorageAccount)'
+        backendAzureRmContainerName: '$(Container)'
+        backendAzureRmKey: '$(TfstateFile_az_cosmos)'
+# Terraform Validate:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM VALIDATE
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+        workingDirectory: '$(workingDir_az_cosmos)'
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Plan:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM PLAN
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        workingDirectory: '$(workingDir_az_cosmos)'
+        commandOptions: "--var-file=$(TfVars_az_cosmos)"
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Apply:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM APPLY # The terraform Plan stored earlier is used here to apply only the changes.
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(workingDir_az_cosmos)'
+        commandOptions: "--var-file=$(TfVars_az_cosmos)" 
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+
+##########################################################
+# Stage to Deploy Private Endpoint DNS for Azure Batch:-
+##########################################################
+
+- stage: DEPLOY_PDZ_AZ_BATCH
+  condition: |
+     and(eq(variables['build.sourceBranch'], 'refs/heads/main'),
+       eq('${{ parameters.Private_DNS_Zone__Azure_Batch }}', true)
+     )
+  jobs:
+  - job: DEPLOY_PDZ_AZ_BATCH
+    displayName: DEPLOY PRIVATE DNS ZONE AZ BATCH
+    steps:
+# Install Terraform Installer in the Build Agent:-
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+      displayName: INSTALL TERRAFORM VERSION - LATEST
+      inputs:
+        terraformVersion: 'latest'
+# Terraform Init:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM INIT
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(workingDir_az_batch)' # Az DevOps can find the required Terraform code
+        backendServiceArm: '${{ parameters.ServiceConnection }}' 
+        backendAzureRmResourceGroupName: '$(ResourceGroup)' 
+        backendAzureRmStorageAccountName: '$(StorageAccount)'
+        backendAzureRmContainerName: '$(Container)'
+        backendAzureRmKey: '$(TfstateFile_az_batch)'
+# Terraform Validate:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM VALIDATE
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+        workingDirectory: '$(workingDir_az_batch)'
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Plan:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM PLAN
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        workingDirectory: '$(workingDir_az_batch)'
+        commandOptions: "--var-file=$(TfVars_az_batch)"
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Apply:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM APPLY # The terraform Plan stored earlier is used here to apply only the changes.
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(workingDir_az_batch)'
+        commandOptions: "--var-file=$(TfVars_az_batch)" 
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+
+#############################################################################
+# Stage to Deploy Private Endpoint DNS for Azure Database for PostGreSQL:-
+#############################################################################
+
+- stage: DEPLOY_PDZ_AZ_POSTGRESQL
+  condition: |
+     and(eq(variables['build.sourceBranch'], 'refs/heads/main'),
+       eq('${{ parameters.Private_DNS_Zone__Azure_PostGreSQL }}', true)
+     )
+  jobs:
+  - job: DEPLOY_PDZ_AZ_POSTGRESQL
+    displayName: DEPLOY PRIVATE DNS ZONE AZ POSTGRESQL
+    steps:
+# Install Terraform Installer in the Build Agent:-
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+      displayName: INSTALL TERRAFORM VERSION - LATEST
+      inputs:
+        terraformVersion: 'latest'
+# Terraform Init:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM INIT
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(workingDir_az_psql)' # Az DevOps can find the required Terraform code
+        backendServiceArm: '${{ parameters.ServiceConnection }}' 
+        backendAzureRmResourceGroupName: '$(ResourceGroup)' 
+        backendAzureRmStorageAccountName: '$(StorageAccount)'
+        backendAzureRmContainerName: '$(Container)'
+        backendAzureRmKey: '$(TfstateFile_az_psql)'
+# Terraform Validate:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM VALIDATE
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+        workingDirectory: '$(workingDir_az_psql)'
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Plan:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM PLAN
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        workingDirectory: '$(workingDir_az_psql)'
+        commandOptions: "--var-file=$(TfVars_az_psql)"
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Apply:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM APPLY # The terraform Plan stored earlier is used here to apply only the changes.
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(workingDir_az_psql)'
+        commandOptions: "--var-file=$(TfVars_az_psql)" 
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+
+######################################################################
+# Stage to Deploy Private Endpoint DNS for Azure Database for MYSQL:-
+######################################################################
+
+- stage: DEPLOY_PDZ_AZ_MYSQL
+  condition: |
+     and(eq(variables['build.sourceBranch'], 'refs/heads/main'),
+       eq('${{ parameters.Private_DNS_Zone__Azure_MySQL }}', true)
+     )
+  jobs:
+  - job: DEPLOY_PDZ_AZ_MYSQL
+    displayName: DEPLOY PRIVATE DNS ZONE AZ MYSQL
+    steps:
+# Install Terraform Installer in the Build Agent:-
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+      displayName: INSTALL TERRAFORM VERSION - LATEST
+      inputs:
+        terraformVersion: 'latest'
+# Terraform Init:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM INIT
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(workingDir_az_mysql)' # Az DevOps can find the required Terraform code
+        backendServiceArm: '${{ parameters.ServiceConnection }}' 
+        backendAzureRmResourceGroupName: '$(ResourceGroup)' 
+        backendAzureRmStorageAccountName: '$(StorageAccount)'
+        backendAzureRmContainerName: '$(Container)'
+        backendAzureRmKey: '$(TfstateFile_az_mysql)'
+# Terraform Validate:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM VALIDATE
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+        workingDirectory: '$(workingDir_az_mysql)'
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Plan:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM PLAN
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        workingDirectory: '$(workingDir_az_mysql)'
+        commandOptions: "--var-file=$(TfVars_az_mysql)"
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Apply:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM APPLY # The terraform Plan stored earlier is used here to apply only the changes.
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(workingDir_az_mysql)'
+        commandOptions: "--var-file=$(TfVars_az_mysql)" 
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+
+#############################################################################
+# Stage to Deploy Private Endpoint DNS for Azure Database for MariaDB:-
+#############################################################################
+
+- stage: DEPLOY_PDZ_AZ_MARIADB
+  condition: |
+     and(eq(variables['build.sourceBranch'], 'refs/heads/main'),
+       eq('${{ parameters.Private_DNS_Zone__Azure_MariaDB }}', true)
+     )
+  jobs:
+  - job: DEPLOY_PDZ_AZ_MARIADB
+    displayName: DEPLOY PRIVATE DNS ZONE AZ MARIADB
+    steps:
+# Install Terraform Installer in the Build Agent:-
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+      displayName: INSTALL TERRAFORM VERSION - LATEST
+      inputs:
+        terraformVersion: 'latest'
+# Terraform Init:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM INIT
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(workingDir_az_mariadb)' # Az DevOps can find the required Terraform code
+        backendServiceArm: '${{ parameters.ServiceConnection }}' 
+        backendAzureRmResourceGroupName: '$(ResourceGroup)' 
+        backendAzureRmStorageAccountName: '$(StorageAccount)'
+        backendAzureRmContainerName: '$(Container)'
+        backendAzureRmKey: '$(TfstateFile_az_mariadb)'
+# Terraform Validate:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM VALIDATE
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+        workingDirectory: '$(workingDir_az_mariadb)'
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Plan:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM PLAN
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        workingDirectory: '$(workingDir_az_mariadb)'
+        commandOptions: "--var-file=$(TfVars_az_mariadb)"
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Apply:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM APPLY # The terraform Plan stored earlier is used here to apply only the changes.
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(workingDir_az_mariadb)'
+        commandOptions: "--var-file=$(TfVars_az_mariadb)" 
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+
+#############################################################################
+# Stage to Deploy Private Endpoint DNS for Azure Database for Key Vault:-
+#############################################################################
+
+- stage: DEPLOY_PDZ_AZ_KEYVAULT
+  condition: |
+     and(eq(variables['build.sourceBranch'], 'refs/heads/main'),
+       eq('${{ parameters.Private_DNS_Zone__Azure_KeyVault }}', true)
+     )
+  jobs:
+  - job: DEPLOY_PDZ_AZ_KEYVAULT
+    displayName: DEPLOY PRIVATE DNS ZONE AZ KEYVAULT
+    steps:
+# Install Terraform Installer in the Build Agent:-
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+      displayName: INSTALL TERRAFORM VERSION - LATEST
+      inputs:
+        terraformVersion: 'latest'
+# Terraform Init:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM INIT
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(workingDir_az_kv)' # Az DevOps can find the required Terraform code
+        backendServiceArm: '${{ parameters.ServiceConnection }}' 
+        backendAzureRmResourceGroupName: '$(ResourceGroup)' 
+        backendAzureRmStorageAccountName: '$(StorageAccount)'
+        backendAzureRmContainerName: '$(Container)'
+        backendAzureRmKey: '$(TfstateFile_az_kv)'
+# Terraform Validate:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM VALIDATE
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+        workingDirectory: '$(workingDir_az_kv)'
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Plan:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM PLAN
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        workingDirectory: '$(workingDir_az_kv)'
+        commandOptions: "--var-file=$(TfVars_az_kv)"
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Apply:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM APPLY # The terraform Plan stored earlier is used here to apply only the changes.
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(workingDir_az_kv)'
+        commandOptions: "--var-file=$(TfVars_az_kv)" 
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+
+########################################################################
+# Stage to Deploy Private Endpoint DNS for Azure Container Registry:-
+########################################################################
+
+- stage: DEPLOY_PDZ_AZ_CONTAINER_REGISTRY
+  condition: |
+     and(eq(variables['build.sourceBranch'], 'refs/heads/main'),
+       eq('${{ parameters.Private_DNS_Zone__Azure_Container_Registry }}', true)
+     )
+  jobs:
+  - job: DEPLOY_PDZ_AZ_CONTAINER_REGISTRY
+    displayName: DEPLOY PRIVATE DNS ZONE AZ CONTAINER REGISTRY
+    steps:
+# Install Terraform Installer in the Build Agent:-
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+      displayName: INSTALL TERRAFORM VERSION - LATEST
+      inputs:
+        terraformVersion: 'latest'
+# Terraform Init:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM INIT
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(workingDir_az_acr)' # Az DevOps can find the required Terraform code
+        backendServiceArm: '${{ parameters.ServiceConnection }}' 
+        backendAzureRmResourceGroupName: '$(ResourceGroup)' 
+        backendAzureRmStorageAccountName: '$(StorageAccount)'
+        backendAzureRmContainerName: '$(Container)'
+        backendAzureRmKey: '$(TfstateFile_az_acr)'
+# Terraform Validate:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM VALIDATE
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+        workingDirectory: '$(workingDir_az_acr)'
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Plan:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM PLAN
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        workingDirectory: '$(workingDir_az_acr)'
+        commandOptions: "--var-file=$(TfVars_az_acr)"
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
+# Terraform Apply:-
+    - task: TerraformTaskV2@2
+      displayName: TERRAFORM APPLY # The terraform Plan stored earlier is used here to apply only the changes.
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(workingDir_az_acr)'
+        commandOptions: "--var-file=$(TfVars_az_acr)" 
+        environmentServiceNameAzureRM: '${{ parameters.ServiceConnection }}'
